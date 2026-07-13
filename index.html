@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>누구나 AI Native — Test기술팀</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #0D1117;
+      --bg2:    #161B22;
+      --bg3:    #1C2128;
+      --border: #30363D;
+      --text:   #F0F6FC;
+      --muted:  #8B949E;
+      --muted2: #C9D1D9;
+      --c1: #E07B39;
+      --c2: #58A6FF;
+      --c3: #BC8CFF;
+      --c4: #3FB950;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Noto Sans KR',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; overflow-x:hidden; }
+
+    /* NAV */
+    nav {
+      position:fixed; top:0; width:100%; z-index:100;
+      padding:18px 48px; display:flex; align-items:center; justify-content:space-between;
+      background:rgba(13,17,23,.88); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(48,54,61,.5);
+    }
+    .nav-logo { font-size:14px; font-weight:700; letter-spacing:.08em; color:var(--muted2); }
+    .nav-logo span { color:var(--c1); }
+    .nav-links { display:flex; gap:28px; }
+    .nav-links a { font-size:13px; color:var(--muted); text-decoration:none; transition:color .2s; }
+    .nav-links a:hover { color:var(--text); }
+
+    /* HERO */
+    #hero {
+      min-height:100vh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; text-align:center;
+      padding:120px 24px 80px; position:relative; overflow:hidden;
+    }
+    .hero-grid {
+      position:absolute; inset:0; opacity:.05;
+      background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+      background-size:60px 60px;
+    }
+    .hero-glow {
+      position:absolute; top:30%; left:50%; transform:translate(-50%,-50%);
+      width:700px; height:700px;
+      background:radial-gradient(circle,rgba(224,123,57,.10) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px; padding:6px 16px;
+      border:1px solid rgba(224,123,57,.4); border-radius:999px;
+      font-size:12px; color:var(--c1); letter-spacing:.1em; font-weight:500;
+      margin-bottom:36px; background:rgba(224,123,57,.07);
+      opacity:0; animation:fadeUp .8s .2s forwards;
+    }
+    .hero-badge::before {
+      content:''; width:6px; height:6px; border-radius:50%;
+      background:var(--c1); animation:pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+    h1 {
+      font-size:clamp(36px,7vw,76px); font-weight:900;
+      line-height:1.1; letter-spacing:-.02em; margin-bottom:28px;
+      opacity:0; animation:fadeUp .9s .4s forwards;
+    }
+    h1 .hl { color:var(--c1); }
+    .hero-sub {
+      font-size:clamp(15px,2vw,18px); color:var(--muted2);
+      max-width:600px; line-height:1.8;
+      opacity:0; animation:fadeUp .9s .6s forwards;
+    }
+    .hero-axes {
+      margin-top:48px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+      opacity:0; animation:fadeUp .9s .8s forwards;
+    }
+    .ap {
+      padding:8px 18px; border-radius:999px; font-size:13px; font-weight:600; border:1px solid;
+    }
+    .ap1 { border-color:rgba(224,123,57,.5); color:var(--c1); background:rgba(224,123,57,.07); }
+    .ap2 { border-color:rgba(88,166,255,.5); color:var(--c2); background:rgba(88,166,255,.07); }
+    .ap3 { border-color:rgba(188,140,255,.5); color:var(--c3); background:rgba(188,140,255,.07); }
+    .ap4 { border-color:rgba(63,185,80,.5); color:var(--c4); background:rgba(63,185,80,.07); }
+    .hero-stats {
+      margin-top:64px; display:flex; gap:56px; flex-wrap:wrap; justify-content:center;
+      opacity:0; animation:fadeUp .9s 1s forwards;
+    }
+    .stat { text-align:center; }
+    .stat-num { font-size:34px; font-weight:900; color:var(--c1); }
+    .stat-label { font-size:11px; color:var(--muted); letter-spacing:.08em; margin-top:4px; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+    /* SECTION BASE */
+    .sec { padding:96px 24px; max-width:1100px; margin:0 auto; }
+    .sec-full { padding:96px 0; }
+    .sec-full .inner { max-width:1100px; margin:0 auto; padding:0 24px; }
+    .slabel {
+      font-size:11px; font-weight:700; letter-spacing:.15em;
+      text-transform:uppercase; margin-bottom:12px;
+    }
+    .slabel-1 { color:var(--c1); }
+    .slabel-2 { color:var(--c2); }
+    .slabel-3 { color:var(--c3); }
+    .slabel-4 { color:var(--c4); }
+    .slabel-gray { color:var(--muted); }
+    h2 { font-size:clamp(26px,4vw,42px); font-weight:800; line-height:1.2; letter-spacing:-.02em; margin-bottom:14px; }
+    .sdesc { font-size:17px; color:var(--muted2); max-width:560px; line-height:1.8; margin-bottom:52px; }
+
+    /* STRATEGY */
+    #strategy { background:var(--bg2); border-bottom:1px solid var(--border); }
+    .strategy-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:52px; }
+    .sc {
+      padding:32px; border:1px solid var(--border); border-radius:14px;
+      background:var(--bg); position:relative; overflow:hidden;
+      transition:transform .2s;
+    }
+    .sc::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+    .sc1::before { background:var(--c1); }
+    .sc2::before { background:var(--c2); }
+    .sc3::before { background:var(--c3); }
+    .sc4::before { background:var(--c4); }
+    .sc:hover { transform:translateY(-3px); }
+    .sc1:hover { border-color:rgba(224,123,57,.4); }
+    .sc2:hover { border-color:rgba(88,166,255,.4); }
+    .sc3:hover { border-color:rgba(188,140,255,.4); }
+    .sc4:hover { border-color:rgba(63,185,80,.4); }
+    .sc-head { display:flex; align-items:flex-start; gap:14px; margin-bottom:18px; }
+    .sc-num {
+      font-size:11px; font-weight:800; letter-spacing:.1em;
+      padding:4px 10px; border-radius:6px; flex-shrink:0; margin-top:2px;
+    }
+    .scn1 { background:rgba(224,123,57,.15); color:var(--c1); }
+    .scn2 { background:rgba(88,166,255,.15); color:var(--c2); }
+    .scn3 { background:rgba(188,140,255,.15); color:var(--c3); }
+    .scn4 { background:rgba(63,185,80,.15); color:var(--c4); }
+    .sc-title { font-size:20px; font-weight:800; margin-bottom:3px; }
+    .sc-sub { font-size:13px; color:var(--muted); }
+    .sc-body { font-size:14px; color:var(--muted2); line-height:1.7; margin-bottom:18px; }
+    .sc-bullets { list-style:none; margin-bottom:18px; display:flex; flex-direction:column; gap:7px; }
+    .sc-bullets li { font-size:13px; color:var(--muted2); display:flex; gap:8px; }
+    .sc-bullets li span { color:var(--muted); flex-shrink:0; }
+    .sc-foot {
+      display:flex; align-items:center; gap:10px;
+      padding-top:16px; border-top:1px solid var(--border);
+      font-size:12px; color:var(--muted);
+    }
+    .badge {
+      padding:3px 10px; border-radius:999px; font-size:11px; font-weight:600;
+    }
+    .badge-green { background:rgba(63,185,80,.12); color:var(--c4); }
+    .badge-yellow { background:rgba(254,188,46,.12); color:#FEBC2E; }
+
+    /* DISTINCTION (AI Native vs FDE) */
+    .distinction-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:52px; }
+    .dc {
+      padding:32px; border:1px solid var(--border);
+      border-radius:14px; background:var(--bg2);
+    }
+    .dc-native { border-color:rgba(224,123,57,.35); background:rgba(224,123,57,.04); }
+    .dc-fde    { border-color:rgba(88,166,255,.35);  background:rgba(88,166,255,.04); }
+    .dc-tag {
+      display:inline-block; font-size:11px; font-weight:700;
+      letter-spacing:.08em; padding:3px 10px; border-radius:4px; margin-bottom:14px;
+    }
+    .dct1 { background:rgba(224,123,57,.15); color:var(--c1); }
+    .dct2 { background:rgba(88,166,255,.15); color:var(--c2); }
+    .dc-icon { font-size:36px; margin-bottom:14px; display:block; }
+    .dc h3 { font-size:19px; font-weight:700; margin-bottom:10px; }
+    .dc-desc { font-size:14px; color:var(--muted2); line-height:1.75; margin-bottom:18px; }
+    .dc-list { list-style:none; }
+    .dc-list li {
+      font-size:13px; color:var(--muted2);
+      padding:7px 0; border-bottom:1px solid var(--border);
+      display:flex; gap:10px;
+    }
+    .dc-list li:last-child { border-bottom:none; }
+    .dc-list li .icon { flex-shrink:0; }
+
+    /* HARNESS */
+    #harness { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .harness-arch { margin-top:52px; border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+    .harness-top {
+      padding:22px 32px; background:var(--bg3);
+      border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px;
+    }
+    .dot { width:10px; height:10px; border-radius:50%; }
+    .dot-r{background:#ff5f57} .dot-y{background:#febc2e} .dot-g{background:#28c840}
+    .harness-top-label { font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--muted); margin-left:8px; }
+    .harness-layers { padding:32px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .layer {
+      padding:22px; border:1px solid var(--border); border-radius:10px;
+      background:var(--bg); transition:border-color .2s, transform .2s;
+    }
+    .layer:hover { border-color:var(--c1); transform:translateY(-2px); }
+    .layer-num { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--c1); font-weight:700; margin-bottom:10px; }
+    .layer h4 { font-size:15px; font-weight:700; margin-bottom:7px; }
+    .layer p { font-size:13px; color:var(--muted); line-height:1.6; }
+    .ci { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c1); background:rgba(224,123,57,.1); padding:1px 6px; border-radius:4px; }
+
+    /* FEATURES */
+    .features-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+    .fc {
+      padding:30px; border:1px solid var(--border); border-radius:12px;
+      background:var(--bg2); transition:border-color .25s, transform .2s;
+    }
+    .fc:hover { border-color:rgba(224,123,57,.5); transform:translateY(-2px); }
+    .fc-icon {
+      width:44px; height:44px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px; margin-bottom:18px; background:var(--bg3); border:1px solid var(--border);
+    }
+    .fc h3 { font-size:17px; font-weight:700; margin-bottom:8px; }
+    .fc p { font-size:14px; color:var(--muted2); line-height:1.7; }
+
+    /* FDE DETAILED */
+    #fde { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .fde-explain {
+      padding:28px 32px; border:1px solid rgba(88,166,255,.3);
+      border-radius:12px; background:rgba(88,166,255,.05); margin-bottom:40px;
+    }
+    .fde-explain-label { font-size:11px; font-weight:700; color:var(--c2); letter-spacing:.12em; margin-bottom:10px; }
+    .fde-explain h3 { font-size:20px; font-weight:700; margin-bottom:12px; }
+    .fde-explain p { font-size:15px; color:var(--muted2); line-height:1.8; }
+    .fde-origin {
+      margin-top:14px; padding:12px 16px; background:var(--bg3);
+      border-radius:8px; font-size:13px; color:var(--muted);
+      font-family:'JetBrains Mono',monospace; line-height:1.7;
+    }
+    .fde-flow { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:var(--border); border-radius:12px; overflow:hidden; margin-top:40px; }
+    .fde-step { padding:24px 20px; background:var(--bg); }
+    .fde-step-num { font-size:11px; font-weight:700; color:var(--c2); letter-spacing:.1em; margin-bottom:10px; }
+    .fde-step h4 { font-size:15px; font-weight:700; margin-bottom:6px; }
+    .fde-step p { font-size:13px; color:var(--muted); line-height:1.6; }
+    .fde-outcome {
+      margin-top:20px; padding:20px 24px;
+      background:var(--bg); border:1px solid rgba(88,166,255,.25);
+      border-radius:10px; display:flex; gap:20px; align-items:center;
+    }
+    .fde-outcome-icon { font-size:28px; flex-shrink:0; }
+    .fde-outcome h4 { font-size:15px; font-weight:700; margin-bottom:4px; }
+    .fde-outcome p { font-size:13px; color:var(--muted2); line-height:1.6; }
+
+    /* PLATFORM */
+    .platform-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    .pc {
+      padding:36px; border:1px solid var(--border); border-radius:14px;
+      background:var(--bg2); border-top-width:3px;
+    }
+    .pc3 { border-top-color:var(--c3); }
+    .pc4 { border-top-color:var(--c4); }
+    .pc-label { font-size:11px; font-weight:700; letter-spacing:.12em; margin-bottom:10px; }
+    .pcl3 { color:var(--c3); } .pcl4 { color:var(--c4); }
+    .pc h3 { font-size:20px; font-weight:800; margin-bottom:8px; }
+    .pc-desc { font-size:14px; color:var(--muted2); line-height:1.7; margin-bottom:20px; }
+    .pc-bullets { list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+    .pc-bullets li { font-size:13px; color:var(--muted2); display:flex; gap:8px; }
+    .pc-metric { padding:16px; background:var(--bg3); border-radius:8px; display:flex; align-items:center; gap:14px; }
+    .pm-num { font-size:28px; font-weight:900; }
+    .pm3 { color:var(--c3); } .pm4 { color:var(--c4); }
+    .pm-desc { font-size:13px; color:var(--muted2); line-height:1.5; }
+
+    /* CONNECT */
+    #connect { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .pipeline {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:2px; background:var(--border);
+      border-radius:14px; overflow:hidden; margin-top:52px;
+    }
+    .pb { padding:28px 22px; background:var(--bg); }
+    .pb-num { font-size:11px; font-weight:700; letter-spacing:.1em; margin-bottom:10px; }
+    .pbn4 { color:var(--c4); } .pbn3 { color:var(--c3); }
+    .pbn1 { color:var(--c1); } .pbn2 { color:var(--c2); }
+    .pb h4 { font-size:15px; font-weight:700; margin-bottom:6px; }
+    .pb p  { font-size:12px; color:var(--muted); line-height:1.6; }
+    .connect-note {
+      margin-top:20px; padding:18px 24px; background:var(--bg3);
+      border-radius:10px; display:flex; gap:12px; align-items:flex-start;
+    }
+    .cn-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+    .cn-text { font-size:14px; color:var(--muted2); line-height:1.7; }
+
+    /* CASES */
+    .cases-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .case-card {
+      border:1px solid var(--border); border-radius:12px;
+      background:var(--bg2); overflow:hidden; transition:transform .2s, border-color .2s;
+    }
+    .case-card:hover { transform:translateY(-4px); border-color:var(--muted); }
+    .case-header { padding:26px 26px 18px; border-bottom:1px solid var(--border); }
+    .case-emoji { font-size:30px; margin-bottom:12px; display:block; }
+    .case-card h3 { font-size:16px; font-weight:700; margin-bottom:5px; }
+    .case-card .case-sub { font-size:13px; color:var(--muted); }
+    .case-body { padding:18px 26px 26px; }
+    .ctag {
+      display:inline-block; font-size:11px; font-weight:600;
+      padding:3px 10px; border-radius:999px; margin:3px 3px 3px 0;
+    }
+    .tb { background:rgba(88,166,255,.12); color:var(--c2); }
+    .tg { background:rgba(63,185,80,.12); color:var(--c4); }
+    .tp { background:rgba(188,140,255,.12); color:var(--c3); }
+    .to { background:rgba(224,123,57,.12); color:var(--c1); }
+    .case-result {
+      margin-top:14px; padding:12px 14px; background:var(--bg3);
+      border-radius:8px; font-size:13px; color:var(--muted2);
+      font-family:'JetBrains Mono',monospace; line-height:1.6;
+    }
+    .ok { color:var(--c4); }
+
+    /* PERSONA */
+    #persona {
+      background:linear-gradient(135deg,rgba(224,123,57,.06) 0%,rgba(88,166,255,.04) 100%);
+      border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+    }
+    .persona-grid { margin-top:52px; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+    .persona-steps { display:flex; flex-direction:column; gap:22px; }
+    .persona-step { display:flex; gap:18px; align-items:flex-start; }
+    .step-num {
+      flex-shrink:0; width:36px; height:36px; border-radius:50%;
+      background:var(--c1); color:#fff; font-weight:900; font-size:14px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .persona-step h4 { font-size:16px; font-weight:700; margin-bottom:4px; }
+    .persona-step p { font-size:14px; color:var(--muted2); line-height:1.6; }
+    .persona-visual { border:1px solid var(--border); border-radius:14px; background:var(--bg2); padding:30px; }
+    .agent-card {
+      border:1px solid var(--border); border-radius:10px;
+      background:var(--bg3); padding:18px; margin-bottom:14px;
+      display:flex; align-items:center; gap:14px;
+    }
+    .agent-avatar {
+      width:42px; height:42px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; background:var(--bg); border:1px solid var(--border); flex-shrink:0;
+    }
+    .agent-card h4 { font-size:14px; font-weight:700; margin-bottom:3px; }
+    .agent-card p { font-size:12px; color:var(--muted); }
+    .agent-status {
+      margin-left:auto; font-size:11px; font-weight:600;
+      padding:3px 10px; border-radius:999px;
+      background:rgba(63,185,80,.12); color:var(--c4); flex-shrink:0;
+    }
+
+    /* CTA */
+    #cta { text-align:center; padding:120px 24px; }
+    .cta-inner { max-width:640px; margin:0 auto; }
+    #cta h2 { font-size:clamp(28px,5vw,48px); margin-bottom:20px; }
+    #cta p { font-size:17px; color:var(--muted2); line-height:1.8; margin-bottom:40px; }
+    .btn-row { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+    .btn-p {
+      padding:14px 32px; background:var(--c1); color:#fff; font-weight:700;
+      border:none; border-radius:8px; font-size:15px;
+      text-decoration:none; transition:background .2s, transform .15s;
+    }
+    .btn-p:hover { background:#c96a2a; transform:translateY(-1px); }
+    .btn-g {
+      padding:14px 32px; border:1px solid var(--border); color:var(--muted2);
+      font-weight:500; border-radius:8px; font-size:15px;
+      text-decoration:none; transition:border-color .2s, color .2s;
+    }
+    .btn-g:hover { border-color:var(--muted); color:var(--text); }
+
+    /* FOOTER */
+    footer {
+      border-top:1px solid var(--border); padding:30px 48px;
+      display:flex; align-items:center; justify-content:space-between;
+      font-size:13px; color:var(--muted);
+    }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+
+    /* RESPONSIVE */
+    @media (max-width:768px) {
+      nav { padding:16px 20px; }
+      .nav-links { display:none; }
+      .strategy-grid,.distinction-grid,.platform-grid,
+      .features-grid,.cases-grid,.persona-grid,.harness-layers { grid-template-columns:1fr; }
+      .fde-flow,.pipeline { grid-template-columns:1fr 1fr; }
+      footer { flex-direction:column; gap:12px; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>Test</span>기술팀 · AI 전환 전략</div>
+  <div class="nav-links">
+    <a href="#strategy">4개 과제</a>
+    <a href="#ai-native">AI Native</a>
+    <a href="#fde">FDE</a>
+    <a href="#harness">하네스</a>
+    <a href="#platform">플랫폼</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-badge">TEST기술팀 · AI 전환 전략 2026</div>
+  <h1>누구나 AI Native,<br><span class="hl">Test기술팀</span></h1>
+  <p class="hero-sub">
+    4개 전략 축으로 팀 전체를 AI Native로 전환합니다.<br>
+    도구를 배우는 게 아니라, AI와 함께 일하는 방식 자체를 바꿉니다.
+  </p>
+  <div class="hero-axes">
+    <span class="ap ap1">① AI Native 전환</span>
+    <span class="ap ap2">② FDE 현장 투입</span>
+    <span class="ap ap3">③ TSP LLM 통합 Agent</span>
+    <span class="ap ap4">④ AI Ready Data</span>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">전략 과제 축</div></div>
+    <div class="stat"><div class="stat-num">50%</div><div class="stat-label">데이터 적재 목표</div></div>
+    <div class="stat"><div class="stat-num">오픈</div><div class="stat-label">보안 이슈 없는 오픈코드 기반</div></div>
+  </div>
+</div>
+
+<!-- STRATEGY OVERVIEW -->
+<div id="strategy" class="sec-full">
+  <div class="inner">
+    <div class="reveal">
+      <div class="slabel slabel-gray">4개 전략 과제 축</div>
+      <h2>무엇을, 어떻게 바꾸는가</h2>
+      <p class="sdesc">
+        Test기술팀의 AI 전환은 4개의 축으로 동시에 진행됩니다.
+        각 과제는 독립적으로 실행되면서도 서로 연결되어 시너지를 만듭니다.
+      </p>
+    </div>
+    <div class="strategy-grid reveal">
+
+      <div class="sc sc1">
+        <div class="sc-head">
+          <span class="sc-num scn1">AXIS 01</span>
+          <div>
+            <div class="sc-title">AI Native 전환</div>
+            <div class="sc-sub">팀원 스스로 AI를 활용해서 일하게</div>
+          </div>
+        </div>
+        <p class="sc-body">
+          팀원이 각자의 업무 방식에 맞는 AI 에이전트를 직접 만들고 운영합니다.
+          환경 설정을 한 번에 완료할 수 있는 하네스 플러그인으로 진입 장벽을 없애고,
+          오픈코드 기반으로 보안 이슈 없이 사내 환경에서 바로 쓸 수 있습니다.
+        </p>
+        <ul class="sc-bullets">
+          <li><span>▸</span>환경 설정 1회 → 즉시 사용 가능한 하네스 플러그인</li>
+          <li><span>▸</span>오픈코드 기반 구현, 보안 이슈 제거</li>
+          <li><span>▸</span>페르소나 에이전트 자율 개발</li>
+          <li><span>▸</span>Data Lake MCP 연동, 개인 활용 사례 팀 자산화</li>
+        </ul>
+        <div class="sc-foot"><span class="badge badge-green">진행 중</span>팀원 역량 강화 · 팀 전체 확산</div>
+      </div>
+
+      <div class="sc sc2">
+        <div class="sc-head">
+          <span class="sc-num scn2">AXIS 02</span>
+          <div>
+            <div class="sc-title">FDE 과제 밀착</div>
+            <div class="sc-sub">과제별로 깊이 파고들어 함께 해결하기</div>
+          </div>
+        </div>
+        <p class="sc-body">
+          TSS 엔지니어가 과제별로 밀착 투입됩니다. 외부에서 지원하는 게 아니라
+          함께 몰입하면서 반복 업무를 자동화하고, 성공 사례를 만들어 팀 전체로 확산합니다.
+        </p>
+        <ul class="sc-bullets">
+          <li><span>▸</span>과제별 TSS 밀착 투입, 함께 몰입해서 해결</li>
+          <li><span>▸</span>Excel 업무 제거 · E2E Workflow 개선</li>
+          <li><span>▸</span>성공 사례 → 재현 가능한 하네스로 패키징</li>
+          <li><span>▸</span>MBO 연계 AI 전환율 커버리지 향상</li>
+        </ul>
+        <div class="sc-foot"><span class="badge badge-green">진행 중</span>과제 밀착 · 팀 내 확산</div>
+      </div>
+
+      <div class="sc sc3">
+        <div class="sc-head">
+          <span class="sc-num scn3">AXIS 03</span>
+          <div>
+            <div class="sc-title">TSP LLM 통합 Agent</div>
+            <div class="sc-sub">파편화된 지식을 하나로 모으기</div>
+          </div>
+        </div>
+        <p class="sc-body">
+          TSP LLM 플랫폼 위에 Test기술팀 전용 Agent를 구축합니다.
+          각자의 머릿속, 로컬 파일, 메신저에 흩어진 지식을 통합해 모두가 팀의 노하우에 즉시 접근할 수 있게 합니다.
+        </p>
+        <ul class="sc-bullets">
+          <li><span>▸</span>TSP LLM 플랫폼 기반 팀 전용 Agent 구축</li>
+          <li><span>▸</span>파편화 지식 → 구조화된 공유 자산</li>
+          <li><span>▸</span>신규 팀원 온보딩 속도 향상</li>
+          <li><span>▸</span>센터 연합 과제 (이재영님 주관)</li>
+        </ul>
+        <div class="sc-foot"><span class="badge badge-yellow">3차 회의 중</span>2026-07-08 3차</div>
+      </div>
+
+      <div class="sc sc4">
+        <div class="sc-head">
+          <span class="sc-num scn4">AXIS 04</span>
+          <div>
+            <div class="sc-title">AI Ready Data</div>
+            <div class="sc-sub">AI가 실제로 쓸 수 있는 데이터 기반</div>
+          </div>
+        </div>
+        <p class="sc-body">
+          TSP Data Lake 기반으로 AI가 활용할 수 있는 데이터 환경을 구축합니다.
+          분류 체계와 메타데이터 정비로 다른 3개 과제가 실제로 의미 있는 결과를 낼 수 있는 기반을 만듭니다.
+        </p>
+        <ul class="sc-bullets">
+          <li><span>▸</span>TSP Data Lake 기반 데이터 분류 체계 수립</li>
+          <li><span>▸</span>정형·비정형 데이터 적재 목표 50%</li>
+          <li><span>▸</span>메타데이터 정비, AI 검색·활용 품질 확보</li>
+          <li><span>▸</span>MBO 연계</li>
+        </ul>
+        <div class="sc-foot"><span class="badge badge-green">진행 중</span>MBO 연계 · 50% 적재 목표</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- AI NATIVE vs FDE -->
+<section id="ai-native" class="sec">
+  <div class="reveal">
+    <div class="slabel slabel-gray">AXIS 01 vs 02 · 두 가지 실행 방식</div>
+    <h2>어떻게 다른가</h2>
+    <p class="sdesc">
+      AI 전환은 "내가 스스로 영리해지는 것"과 "현장에 들어가서 함께 바꾸는 것",
+      두 방향으로 동시에 이루어집니다. 둘은 보완적이지 배타적이지 않습니다.
+    </p>
+  </div>
+  <div class="distinction-grid reveal">
+    <div class="dc dc-native">
+      <span class="dc-tag dct1">AXIS 01 · AI NATIVE</span>
+      <span class="dc-icon">🧑‍💻</span>
+      <h3>팀원 스스로 AI를 활용해서</h3>
+      <p class="dc-desc">
+        환경 설정 한 번으로 AI 작업 환경을 즉시 갖춥니다.
+        오픈코드 기반으로 구성되어 보안 이슈 없이 사내에서 바로 사용 가능하며,
+        각자의 업무에 맞는 에이전트를 코딩 지식 없이도 직접 만들 수 있습니다.
+      </p>
+      <ul class="dc-list">
+        <li><span class="icon">👥</span>대상: Test기술팀 전 팀원</li>
+        <li><span class="icon">🎯</span>목표: 팀원 AI 활용 역량 강화, 업무 효율 향상</li>
+        <li><span class="icon">🛠️</span>방식: 오픈코드 하네스 배포, 에이전트 자율 개발</li>
+        <li><span class="icon">📦</span>결과물: 페르소나 에이전트, 팀 하네스 기여</li>
+      </ul>
+    </div>
+    <div class="dc dc-fde">
+      <span class="dc-tag dct2">AXIS 02 · FDE</span>
+      <span class="dc-icon">🤝</span>
+      <h3>과제에 밀착해서 함께</h3>
+      <p class="dc-desc">
+        TSS 엔지니어가 과제별로 <strong>밀착 투입</strong>됩니다.
+        멀리서 지원하는 게 아니라 처음부터 끝까지 함께 몰입해
+        실제 Pain Point를 해결합니다. 과제가 끝나면 성공 사례를 팀 전체로 확산합니다.
+      </p>
+      <ul class="dc-list">
+        <li><span class="icon">🎯</span>대상: Test기술팀 내 각 과제 (TSS 밀착 투입)</li>
+        <li><span class="icon">💡</span>목표: 과제 완결, 반복 업무 자동화, 성공 사례 축적</li>
+        <li><span class="icon">🛠️</span>방식: 함께 몰입, 처음부터 끝까지 책임지고 구현</li>
+        <li><span class="icon">📦</span>결과물: 재현 가능한 하네스 패키지, 팀 전체 확산</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HARNESS -->
+<div id="harness" class="sec-full">
+  <div class="inner">
+    <div class="reveal">
+      <div class="slabel slabel-1">Core Concept · AI Native</div>
+      <h2>하네스(Harness)란</h2>
+      <p class="sdesc">
+        하네스는 AI가 일을 잘 할 수 있도록 설계된 <strong>작업 환경 패키지</strong>입니다.
+        <strong>오픈코드 기반</strong>으로 구성해 보안 이슈 없이 사내에서 운용하며,
+        플러그인처럼 배포해 누구나 환경 설정 한 번으로 즉시 사용할 수 있습니다.
+      </p>
+    </div>
+    <div class="harness-arch reveal">
+      <div class="harness-top">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="harness-top-label">harness / 6가지 구성 레이어</span>
+      </div>
+      <div class="harness-layers">
+        <div class="layer">
+          <div class="layer-num">LAYER 01</div>
+          <h4>컨텍스트</h4>
+          <p>AI가 이 프로젝트와 팀의 규칙을 이해하도록 설계된 지식 레이어.<br><span class="ci">CLAUDE.md</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 02</div>
+          <h4>스킬(Skills)</h4>
+          <p>반복되는 워크플로우를 명령어 하나로 실행하는 재사용 가능한 레시피.<br><span class="ci">/skill-name</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 03</div>
+          <h4>훅(Hooks)</h4>
+          <p>파일 수정, 명령 실행 등 이벤트에 자동으로 반응하는 트리거.<br><span class="ci">PreToolUse / PostToolUse</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 04</div>
+          <h4>메모리(Memory)</h4>
+          <p>대화가 끊겨도 AI가 팀과 프로젝트를 기억하는 영속 기억 레이어.<br><span class="ci">memory/*.md</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 05</div>
+          <h4>도구 연동(MCP)</h4>
+          <p>슬랙, 텔레그램, GitHub 등 외부 도구를 AI가 직접 다루도록 연결.<br><span class="ci">MCP Servers</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 06</div>
+          <h4>에이전트 오케스트레이션</h4>
+          <p>복잡한 작업을 여러 에이전트가 분담해 병렬로 처리하는 구조.<br><span class="ci">fork / subagent</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features" class="sec">
+  <div class="reveal">
+    <div class="slabel slabel-1">오픈코드 기반 · 핵심 구성</div>
+    <h2>하네스를 이루는 4가지 기능</h2>
+    <p class="sdesc">
+      오픈코드 기반으로 구현된 하네스의 핵심 구성 요소입니다.
+      이 4가지를 조합하면 보안 걱정 없이 팀 전용 AI 작업 환경이 완성됩니다.
+    </p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="fc">
+      <div class="fc-icon">📄</div>
+      <h3>CLAUDE.md — 컨텍스트 설계</h3>
+      <p>
+        프로젝트의 규칙, 기술 스택, 금지 사항을 문서화하면 AI가 모든 세션에서 자동으로 읽어들입니다.
+        팀의 언어와 규칙을 AI에게 가르치는 첫 번째 단계입니다.<br><br>
+        <span class="ci">CLAUDE.md</span> 파일 하나로 시작합니다.
+      </p>
+    </div>
+    <div class="fc">
+      <div class="fc-icon">⚡</div>
+      <h3>Skills — 반복 업무 자동화</h3>
+      <p>
+        자주 쓰는 워크플로우를 슬래시 명령어로 등록합니다.
+        <span class="ci">/deploy</span>, <span class="ci">/review</span>처럼
+        누구나 같은 방식으로 복잡한 작업을 단 한 번에 실행합니다.<br><br>
+        개발자가 만들면 비개발자도 씁니다.
+      </p>
+    </div>
+    <div class="fc">
+      <div class="fc-icon">🪝</div>
+      <h3>Hooks — 이벤트 기반 자동화</h3>
+      <p>
+        파일이 수정될 때, 명령이 실행될 때, 작업이 완료될 때
+        자동으로 검증·백업·알림이 트리거됩니다.<br><br>
+        사람이 깜빡할 수 있는 단계를 훅이 대신합니다.
+        <span class="ci">PreToolUse</span> / <span class="ci">Stop</span>
+      </p>
+    </div>
+    <div class="fc">
+      <div class="fc-icon">🧠</div>
+      <h3>Memory — 대화를 넘는 기억</h3>
+      <p>
+        팀원의 선호도, 프로젝트 맥락, 주의 사항을 파일로 저장하면
+        새 대화를 시작해도 AI가 이전 내용을 기억합니다.<br><br>
+        <span class="ci">user / feedback / project / reference</span> 4가지 타입으로 분류 관리합니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FDE DETAILED -->
+<div id="fde" class="sec-full">
+  <div class="inner">
+    <div class="reveal">
+      <div class="slabel slabel-2">AXIS 02 · Forward Deployed Engineer</div>
+      <h2>FDE 과제 밀착</h2>
+      <p class="sdesc">
+        TSS가 과제별로 밀착 투입되어 처음부터 끝까지 함께 몰입합니다. 그 경험을 팀 전체로 확산합니다.
+      </p>
+    </div>
+    <div class="fde-explain reveal">
+      <div class="fde-explain-label">FDE란 무엇인가</div>
+      <h3>Forward Deployed Engineer</h3>
+      <p>
+        FDE는 실리콘밸리에서 시작된 개념입니다. 기술 엔지니어가 과제에
+        <strong>처음부터 끝까지 밀착해서</strong> 실제 문제를 함께 해결하고 성과를 만드는 방식입니다.
+        Test기술팀에서는 <strong>TSS 엔지니어가 과제별로 몰입 투입</strong>되어
+        반복 업무를 자동화하고, 그 경험을 팀 전체에 전파합니다.
+      </p>
+      <div class="fde-origin">
+일반 지원 방식 : 요청이 오면 대응 → 해결해주고 끝 (단발성, 수동적)<br>
+FDE 방식     : 과제에 밀착 · 함께 몰입 → 처음부터 끝까지 책임지고 완결 (지속적, 능동적)<br>
+확산 방식    : 개별 해결에 그치지 않고 → 재현 가능한 하네스로 패키징 → 팀 전체 배포
+      </div>
+    </div>
+    <div class="fde-flow reveal">
+      <div class="fde-step">
+        <div class="fde-step-num">STEP 01</div>
+        <h4>과제 선정</h4>
+        <p>자동화 효과가 높은 과제를 선정합니다. Excel 의존도, 반복 업무 비율, 팀 체감 Pain 기준.</p>
+      </div>
+      <div class="fde-step">
+        <div class="fde-step-num">STEP 02</div>
+        <h4>TSS 밀착 투입</h4>
+        <p>TSS 엔지니어가 과제에 밀착합니다. 요청 대기가 아니라 함께 몰입해서 Pain Point를 선제 파악합니다.</p>
+      </div>
+      <div class="fde-step">
+        <div class="fde-step-num">STEP 03</div>
+        <h4>함께 완결</h4>
+        <p>반복 업무를 자동화하고 E2E Workflow를 개선합니다. 중간에 끊지 않고 끝까지 책임집니다.</p>
+      </div>
+      <div class="fde-step">
+        <div class="fde-step-num">STEP 04</div>
+        <h4>팀 전체 확산</h4>
+        <p>성공 사례를 재현 가능한 하네스로 패키징해 Test기술팀 전체로 전파합니다.</p>
+      </div>
+    </div>
+    <div class="fde-outcome reveal">
+      <div class="fde-outcome-icon">📊</div>
+      <div>
+        <h4>MBO 연계 지표</h4>
+        <p>E2E Workflow 개선 연계 · AI 전환율 커버리지 향상 · 현장 Pain Point 해결 건수 · 확산된 팀/인원 수</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORM (③④) -->
+<section id="platform" class="sec">
+  <div class="reveal">
+    <div class="slabel slabel-gray">AXIS 03 + 04 · 플랫폼과 데이터 기반</div>
+    <h2>지식 플랫폼과 데이터 기반</h2>
+    <p class="sdesc">
+      AI 전환의 실력은 결국 어떤 지식과 데이터를 가지고 있느냐로 결정됩니다.
+      과제 ③과 ④는 이 기반을 만드는 과제입니다.
+    </p>
+  </div>
+  <div class="platform-grid reveal">
+    <div class="pc pc3">
+      <div class="pc-label pcl3">AXIS 03 · TSP LLM AGENT</div>
+      <h3>파편화된 지식을<br>하나의 공간으로</h3>
+      <p class="pc-desc">
+        각자의 머릿속, 로컬 파일, 메신저에 흩어진 팀의 지식을
+        TSP LLM 플랫폼 위에 통합합니다.
+        Test기술팀 전용 Agent가 누구에게나 팀의 노하우를 전달합니다.
+      </p>
+      <ul class="pc-bullets">
+        <li><span>▸</span>TSP LLM 플랫폼 기반 팀 전용 Agent 구축</li>
+        <li><span>▸</span>파편화된 지식 → 구조화된 공유 자산</li>
+        <li><span>▸</span>신규 팀원 온보딩 시간 단축</li>
+        <li><span>▸</span>센터 연합 과제 (이재영님 주관)</li>
+      </ul>
+      <div class="pc-metric">
+        <div class="pm-num pm3">3차</div>
+        <div class="pm-desc">실무 회의 진행 중<br>2026-07-08 예정</div>
+      </div>
+    </div>
+    <div class="pc pc4">
+      <div class="pc-label pcl4">AXIS 04 · AI READY DATA</div>
+      <h3>AI가 실제로 쓸 수 있는<br>데이터 기반</h3>
+      <p class="pc-desc">
+        TSP Data Lake를 기반으로 AI가 활용할 수 있는 데이터 환경을 구축합니다.
+        분류 체계와 메타데이터 정비로 모든 AI 과제의 품질 기반을 만듭니다.
+      </p>
+      <ul class="pc-bullets">
+        <li><span>▸</span>TSP Data Lake 기반 데이터 분류 체계 수립</li>
+        <li><span>▸</span>정형·비정형 데이터 적재 50% 목표</li>
+        <li><span>▸</span>메타데이터 정비 · AI 검색 품질 확보</li>
+        <li><span>▸</span>MBO 연계 지표</li>
+      </ul>
+      <div class="pc-metric">
+        <div class="pm-num pm4">50%</div>
+        <div class="pm-desc">데이터 적재 목표<br>MBO 연계</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<div id="connect" class="sec-full">
+  <div class="inner">
+    <div class="reveal">
+      <div class="slabel slabel-gray">How It Connects</div>
+      <h2>4개 과제는 어떻게 연결되는가</h2>
+      <p class="sdesc">
+        각 과제는 독립적으로 실행되지만, 연결될수록 효과가 배가됩니다.
+      </p>
+    </div>
+    <div class="pipeline reveal">
+      <div class="pb">
+        <div class="pb-num pbn4">④ AI Ready Data</div>
+        <h4>데이터 기반</h4>
+        <p>AI가 쓸 수 있는 데이터를 만든다</p>
+      </div>
+      <div class="pb">
+        <div class="pb-num pbn3">③ TSP LLM</div>
+        <h4>지식 통합</h4>
+        <p>데이터 위에 팀의 지식을 모은다</p>
+      </div>
+      <div class="pb">
+        <div class="pb-num pbn1">① AI Native</div>
+        <h4>도구 환경</h4>
+        <p>지식을 활용하는 하네스를 만든다</p>
+      </div>
+      <div class="pb">
+        <div class="pb-num pbn2">② FDE</div>
+        <h4>현장 실행</h4>
+        <p>도구를 들고 현장에서 성과를 만든다</p>
+      </div>
+    </div>
+    <div class="connect-note reveal">
+      <div class="cn-icon">🔄</div>
+      <div class="cn-text">
+        FDE에서 쌓인 <strong>성공 사례와 현장 지식</strong>은 다시 TSP LLM Agent로 돌아와
+        팀 전체의 공유 자산이 됩니다. 선순환 구조입니다.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div id="cta">
+  <div class="cta-inner reveal">
+    <div class="slabel slabel-gray" style="display:flex;justify-content:center;">TEST기술팀 · AI 전환 전략</div>
+    <h2 style="margin-top:12px;">누구나 AI Native, Test기술팀</h2>
+    <p>
+      데이터 기반을 쌓고, 지식을 모으고, 도구를 만들고, 현장을 바꾼다.<br>
+      Test기술팀이 AI를 업무 인프라로 만드는 방법입니다.
+    </p>
+    <div class="btn-row">
+      <a href="#strategy" class="btn-p">4개 과제 다시 보기</a>
+      <a href="#harness" class="btn-g">하네스 알아보기</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2026 Test기술팀 · AI Native 전환 과제</div>
+  <div style="display:flex;gap:24px;">
+    <span>Claude Code 기반</span>
+    <span style="color:var(--border)">|</span>
+    <span>Harness Architecture</span>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.10 });
+  reveals.forEach(el => io.observe(el));
+
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--text)' : '';
+    });
+  });
+</script>
+</body>
+</html>
