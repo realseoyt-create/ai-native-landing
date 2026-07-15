@@ -211,6 +211,8 @@
       background:var(--bg2); transition:border-color .25s, transform .2s;
     }
     .fc:hover { border-color:rgba(224,123,57,.5); transform:translateY(-2px); }
+    .fc-wide { grid-column: span 2; }
+    .fc-wide p { max-width: 640px; }
     .fc-icon {
       width:44px; height:44px; border-radius:10px;
       display:flex; align-items:center; justify-content:center;
@@ -383,6 +385,7 @@
       .nav-links { display:none; }
       .strategy-grid,.distinction-grid,.platform-grid,
       .features-grid,.cases-grid,.persona-grid,.harness-layers { grid-template-columns:1fr; }
+      .fc-wide { grid-column: span 1; }
       .fde-flow,.pipeline { grid-template-columns:1fr 1fr; }
       footer { flex-direction:column; gap:12px; text-align:center; }
     }
@@ -456,6 +459,7 @@
           <li><span>▸</span>오픈코드 기반 구현, 보안 이슈 제거</li>
           <li><span>▸</span>페르소나 에이전트 자율 개발</li>
           <li><span>▸</span>Data Lake MCP 연동, 개인 활용 사례 팀 자산화</li>
+          <li><span>▸</span>DevOps 적용 — 클라우드 서버 배포 지원 · 안전한 배포 환경 구축</li>
         </ul>
         <div class="sc-foot"><span class="badge badge-green">진행 중</span>팀원 역량 강화 · 팀 전체 확산</div>
       </div>
@@ -630,10 +634,10 @@
 <section id="features" class="sec">
   <div class="reveal">
     <div class="slabel slabel-1">오픈코드 기반 · 핵심 구성</div>
-    <h2>하네스를 이루는 4가지 기능</h2>
+    <h2>하네스를 이루는 5가지 기능</h2>
     <p class="sdesc">
       오픈코드 기반으로 구현된 하네스의 핵심 구성 요소입니다.
-      이 4가지를 조합하면 보안 걱정 없이 팀 전용 AI 작업 환경이 완성됩니다.
+      이 5가지를 조합하면 보안 걱정 없이 팀 전용 AI 작업 환경이 완성됩니다.
     </p>
   </div>
   <div class="features-grid reveal">
@@ -673,6 +677,15 @@
         팀원의 선호도, 프로젝트 맥락, 주의 사항을 파일로 저장하면
         새 대화를 시작해도 AI가 이전 내용을 기억합니다.<br><br>
         <span class="ci">user / feedback / project / reference</span> 4가지 타입으로 분류 관리합니다.
+      </p>
+    </div>
+    <div class="fc fc-wide">
+      <div class="fc-icon">🚀</div>
+      <h3>DevOps — 안전한 클라우드 배포 환경</h3>
+      <p>
+        AI가 배포 파이프라인에 직접 참여합니다. 코드 변경부터 클라우드 서버 배포까지
+        검증·승인·롤백 단계를 자동화해 사람의 실수를 줄이고 배포 안전성을 높입니다.<br><br>
+        <span class="ci">CI/CD 자동화</span> · <span class="ci">배포 전 사전 검증</span> · <span class="ci">이상 감지 자동 롤백</span>
       </p>
     </div>
   </div>
