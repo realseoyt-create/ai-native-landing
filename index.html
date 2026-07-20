@@ -348,8 +348,8 @@
     <a href="#roadmap">로드맵</a>
     <a href="#transformation">AI Transformation</a>
     <a href="#ainative">AI Native</a>
-    <a href="#devops">DevOps 기반</a>
     <a href="#harness">하네스</a>
+    <a href="#devops">DevOps 기반</a>
   </div>
 </nav>
 
@@ -368,7 +368,6 @@
     <span class="hp-arrow">→</span>
     <div class="hp hp2">AI Native <span style="opacity:.6;font-size:11px;">27~</span></div>
   </div>
-  <div class="hero-base"><span>DevOps 기반 · 서버 접속 없는 안전한 배포 체계</span></div>
 </div>
 
 <!-- ROADMAP -->
@@ -640,6 +639,59 @@
   </div>
 </div>
 
+<!-- HARNESS -->
+<div id="harness" class="sec-full">
+  <div class="inner">
+    <div class="reveal">
+      <div class="slabel sl1">Reliable Harness · 핵심 구성</div>
+      <h2>하네스(Harness)란</h2>
+      <p class="sdesc">
+        AI가 일을 잘 할 수 있도록 설계된 <strong>작업 환경 패키지</strong>입니다.
+        오픈코드 기반으로 구성해 보안 이슈 없이 사내에서 운용하며,
+        환경 설정 한 번으로 팀원 누구나 즉시 사용할 수 있습니다.
+      </p>
+    </div>
+    <div class="harness-arch reveal">
+      <div class="harness-top">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="harness-top-label">harness / 6가지 구성 레이어</span>
+      </div>
+      <div class="harness-layers">
+        <div class="layer">
+          <div class="layer-num">LAYER 01</div>
+          <h4>컨텍스트</h4>
+          <p>AI가 팀의 규칙과 프로젝트를 이해하도록 설계된 지식 레이어.<br><span class="ci">CLAUDE.md</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 02</div>
+          <h4>스킬(Skills)</h4>
+          <p>반복 워크플로우를 명령어 하나로 실행하는 재사용 가능한 레시피.<br><span class="ci">/skill-name</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 03</div>
+          <h4>훅(Hooks)</h4>
+          <p>파일 수정, 명령 실행, 완료 시점에 자동으로 반응하는 트리거.<br><span class="ci">PreToolUse / PostToolUse</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 04</div>
+          <h4>메모리(Memory)</h4>
+          <p>대화가 끊겨도 팀과 프로젝트를 기억하는 영속 기억 레이어.<br><span class="ci">memory/*.md</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 05</div>
+          <h4>도구 연동(MCP)</h4>
+          <p>슬랙, 텔레그램, DB, GitHub 등 외부 도구를 AI가 직접 다루도록 연결.<br><span class="ci">MCP Servers</span></p>
+        </div>
+        <div class="layer">
+          <div class="layer-num">LAYER 06</div>
+          <h4>에이전트 오케스트레이션</h4>
+          <p>복잡한 작업을 여러 에이전트가 분담해 병렬로 처리하는 구조.<br><span class="ci">fork / subagent</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- DEVOPS -->
 <section id="devops" class="sec">
   <div class="reveal">
@@ -697,59 +749,6 @@
     </div>
   </div>
 </section>
-
-<!-- HARNESS -->
-<div id="harness" class="sec-full">
-  <div class="inner">
-    <div class="reveal">
-      <div class="slabel sl1">Reliable Harness · 핵심 구성</div>
-      <h2>하네스(Harness)란</h2>
-      <p class="sdesc">
-        AI가 일을 잘 할 수 있도록 설계된 <strong>작업 환경 패키지</strong>입니다.
-        오픈코드 기반으로 구성해 보안 이슈 없이 사내에서 운용하며,
-        환경 설정 한 번으로 팀원 누구나 즉시 사용할 수 있습니다.
-      </p>
-    </div>
-    <div class="harness-arch reveal">
-      <div class="harness-top">
-        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-        <span class="harness-top-label">harness / 6가지 구성 레이어</span>
-      </div>
-      <div class="harness-layers">
-        <div class="layer">
-          <div class="layer-num">LAYER 01</div>
-          <h4>컨텍스트</h4>
-          <p>AI가 팀의 규칙과 프로젝트를 이해하도록 설계된 지식 레이어.<br><span class="ci">CLAUDE.md</span></p>
-        </div>
-        <div class="layer">
-          <div class="layer-num">LAYER 02</div>
-          <h4>스킬(Skills)</h4>
-          <p>반복 워크플로우를 명령어 하나로 실행하는 재사용 가능한 레시피.<br><span class="ci">/skill-name</span></p>
-        </div>
-        <div class="layer">
-          <div class="layer-num">LAYER 03</div>
-          <h4>훅(Hooks)</h4>
-          <p>파일 수정, 명령 실행, 완료 시점에 자동으로 반응하는 트리거.<br><span class="ci">PreToolUse / PostToolUse</span></p>
-        </div>
-        <div class="layer">
-          <div class="layer-num">LAYER 04</div>
-          <h4>메모리(Memory)</h4>
-          <p>대화가 끊겨도 팀과 프로젝트를 기억하는 영속 기억 레이어.<br><span class="ci">memory/*.md</span></p>
-        </div>
-        <div class="layer">
-          <div class="layer-num">LAYER 05</div>
-          <h4>도구 연동(MCP)</h4>
-          <p>슬랙, 텔레그램, DB, GitHub 등 외부 도구를 AI가 직접 다루도록 연결.<br><span class="ci">MCP Servers</span></p>
-        </div>
-        <div class="layer">
-          <div class="layer-num">LAYER 06</div>
-          <h4>에이전트 오케스트레이션</h4>
-          <p>복잡한 작업을 여러 에이전트가 분담해 병렬로 처리하는 구조.<br><span class="ci">fork / subagent</span></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- CTA -->
 <div id="cta">
