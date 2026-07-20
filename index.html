@@ -169,39 +169,39 @@
 
     /* AI NATIVE VISION */
     #ainative { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-    .native-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:52px; }
-    .native-left { display:flex; flex-direction:column; gap:16px; }
+    .native-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:52px; align-items:stretch; }
+    .native-left { display:flex; flex-direction:column; }
     .agent-flow {
-      padding:32px; background:var(--bg); border:1px solid rgba(88,166,255,.3);
-      border-radius:16px; text-align:center;
+      flex:1; display:flex; flex-direction:column;
+      padding:28px; background:var(--bg); border:1px solid rgba(88,166,255,.3);
+      border-radius:16px;
     }
-    .af-label { font-size:11px; font-weight:700; color:var(--c2); letter-spacing:.1em; margin-bottom:20px; }
-    .af-multi { display:flex; align-items:stretch; gap:0; }
+    .af-label { font-size:11px; font-weight:700; color:var(--c2); letter-spacing:.1em; margin-bottom:16px; }
+    .af-multi { display:flex; align-items:stretch; gap:12px; flex:1; }
     .af-person {
       display:flex; flex-direction:column; align-items:center; justify-content:center;
-      padding:20px 16px; background:rgba(224,123,57,.1); border-radius:12px;
-      border:1px solid rgba(224,123,57,.4); min-width:88px; gap:6px;
+      padding:16px 14px; background:rgba(224,123,57,.1); border-radius:12px;
+      border:1px solid rgba(224,123,57,.4); min-width:84px; gap:6px; flex-shrink:0;
     }
-    .af-person-icon { font-size:28px; }
+    .af-person-icon { font-size:26px; }
     .af-person-label { font-size:14px; font-weight:800; color:var(--c1); }
     .af-person-sub { font-size:10px; color:var(--muted2); text-align:center; line-height:1.4; }
-    .af-arrows {
-      display:flex; flex-direction:column; justify-content:space-around;
-      align-items:center; padding:0 10px; gap:4px;
-    }
+    .af-agent-rows { display:flex; flex-direction:column; gap:8px; flex:1; }
+    .af-row { display:flex; align-items:center; gap:0; flex:1; }
     .af-arr {
-      display:block; width:28px; height:2px; background:rgba(88,166,255,.4);
-      position:relative;
+      display:flex; align-items:center; width:28px; flex-shrink:0;
+    }
+    .af-arr::before {
+      content:''; display:block; height:2px; background:rgba(88,166,255,.4); flex:1; width:20px;
     }
     .af-arr::after {
-      content:'›'; position:absolute; right:-6px; top:-9px;
-      color:rgba(88,166,255,.6); font-size:16px;
+      content:''; display:block; width:0; height:0;
+      border-top:5px solid transparent; border-bottom:5px solid transparent;
+      border-left:6px solid rgba(88,166,255,.5);
     }
-    .af-agents { display:flex; flex-direction:column; gap:8px; flex:1; }
     .af-agent-item {
-      display:flex; align-items:center; gap:10px; padding:10px 14px;
-      background:var(--bg); border:1px solid rgba(88,166,255,.25);
-      border-radius:8px;
+      display:flex; align-items:center; gap:10px; padding:10px 14px; flex:1;
+      background:var(--bg); border:1px solid rgba(88,166,255,.25); border-radius:8px;
     }
     .af-ai {
       font-size:11px; font-weight:700; color:var(--c2);
@@ -210,7 +210,7 @@
     }
     .af-job { font-size:12px; color:var(--muted2); }
     .af-insight {
-      display:flex; gap:12px; align-items:flex-start; margin-top:16px;
+      display:flex; gap:12px; align-items:flex-start; margin-top:14px;
       padding:14px 16px; background:rgba(88,166,255,.06);
       border-left:3px solid var(--c2); border-radius:0 8px 8px 0;
     }
@@ -219,7 +219,7 @@
     .af-insight strong { color:var(--txt); }
     .native-right { display:flex; flex-direction:column; gap:16px; }
     .nr-card {
-      padding:28px; background:var(--bg); border:1px solid var(--border);
+      flex:1; padding:24px 28px; background:var(--bg); border:1px solid var(--border);
       border-radius:12px; border-left:3px solid var(--c2);
     }
     .nr-card h4 { font-size:16px; font-weight:700; margin-bottom:8px; }
@@ -591,28 +591,22 @@
               <span class="af-person-label">팀원</span>
               <span class="af-person-sub">방향 설정 · 판단 · 예외 처리</span>
             </div>
-            <div class="af-arrows">
-              <span class="af-arr"></span>
-              <span class="af-arr"></span>
-              <span class="af-arr"></span>
-              <span class="af-arr"></span>
-            </div>
-            <div class="af-agents">
-              <div class="af-agent-item">
-                <span class="af-ai">Agent A</span>
-                <span class="af-job">데이터 수집 · 분석</span>
+            <div class="af-agent-rows">
+              <div class="af-row">
+                <span class="af-arr"></span>
+                <div class="af-agent-item"><span class="af-ai">Agent A</span><span class="af-job">데이터 수집 · 분석</span></div>
               </div>
-              <div class="af-agent-item">
-                <span class="af-ai">Agent B</span>
-                <span class="af-job">코드 생성 · 리뷰</span>
+              <div class="af-row">
+                <span class="af-arr"></span>
+                <div class="af-agent-item"><span class="af-ai">Agent B</span><span class="af-job">코드 생성 · 리뷰</span></div>
               </div>
-              <div class="af-agent-item">
-                <span class="af-ai">Agent C</span>
-                <span class="af-job">문서 · 보고서 작성</span>
+              <div class="af-row">
+                <span class="af-arr"></span>
+                <div class="af-agent-item"><span class="af-ai">Agent C</span><span class="af-job">문서 · 보고서 작성</span></div>
               </div>
-              <div class="af-agent-item">
-                <span class="af-ai">Agent D</span>
-                <span class="af-job">배포 · 모니터링</span>
+              <div class="af-row">
+                <span class="af-arr"></span>
+                <div class="af-agent-item"><span class="af-ai">Agent D</span><span class="af-job">배포 · 모니터링</span></div>
               </div>
             </div>
           </div>
