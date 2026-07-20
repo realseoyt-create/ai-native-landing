@@ -175,24 +175,48 @@
       padding:32px; background:var(--bg); border:1px solid rgba(88,166,255,.3);
       border-radius:16px; text-align:center;
     }
-    .af-label { font-size:11px; font-weight:700; color:var(--c2); letter-spacing:.1em; margin-bottom:24px; }
-    .af-nodes { display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
-    .af-node {
-      padding:12px 20px; border-radius:10px; font-size:14px; font-weight:700;
-      border:1px solid;
+    .af-label { font-size:11px; font-weight:700; color:var(--c2); letter-spacing:.1em; margin-bottom:20px; }
+    .af-multi { display:flex; align-items:stretch; gap:0; }
+    .af-person {
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:20px 16px; background:rgba(224,123,57,.1); border-radius:12px;
+      border:1px solid rgba(224,123,57,.4); min-width:88px; gap:6px;
     }
-    .af-node-person { background:rgba(224,123,57,.1); border-color:rgba(224,123,57,.4); color:var(--c1); }
-    .af-node-agent  { background:rgba(88,166,255,.15); border-color:rgba(88,166,255,.5); color:var(--c2); }
-    .af-node-job    { background:rgba(188,140,255,.1); border-color:rgba(188,140,255,.4); color:var(--c4); }
-    .af-connector { color:var(--muted); font-size:18px; font-weight:300; }
-    .af-desc { margin-top:20px; font-size:13px; color:var(--muted2); line-height:1.6; }
-    .reliable-card {
-      padding:24px 28px; background:var(--bg); border-radius:12px;
-      border:1px solid var(--border); flex:1;
+    .af-person-icon { font-size:28px; }
+    .af-person-label { font-size:14px; font-weight:800; color:var(--c1); }
+    .af-person-sub { font-size:10px; color:var(--muted2); text-align:center; line-height:1.4; }
+    .af-arrows {
+      display:flex; flex-direction:column; justify-content:space-around;
+      align-items:center; padding:0 10px; gap:4px;
     }
-    .rc-label { font-size:11px; font-weight:700; color:var(--c2); letter-spacing:.1em; margin-bottom:10px; }
-    .rc h4 { font-size:17px; font-weight:700; margin-bottom:8px; }
-    .rc p { font-size:13px; color:var(--muted2); line-height:1.65; }
+    .af-arr {
+      display:block; width:28px; height:2px; background:rgba(88,166,255,.4);
+      position:relative;
+    }
+    .af-arr::after {
+      content:'›'; position:absolute; right:-6px; top:-9px;
+      color:rgba(88,166,255,.6); font-size:16px;
+    }
+    .af-agents { display:flex; flex-direction:column; gap:8px; flex:1; }
+    .af-agent-item {
+      display:flex; align-items:center; gap:10px; padding:10px 14px;
+      background:var(--bg); border:1px solid rgba(88,166,255,.25);
+      border-radius:8px;
+    }
+    .af-ai {
+      font-size:11px; font-weight:700; color:var(--c2);
+      background:rgba(88,166,255,.12); padding:3px 8px; border-radius:5px;
+      white-space:nowrap;
+    }
+    .af-job { font-size:12px; color:var(--muted2); }
+    .af-insight {
+      display:flex; gap:12px; align-items:flex-start; margin-top:16px;
+      padding:14px 16px; background:rgba(88,166,255,.06);
+      border-left:3px solid var(--c2); border-radius:0 8px 8px 0;
+    }
+    .af-ins-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+    .af-insight div { font-size:13px; color:var(--muted2); line-height:1.65; }
+    .af-insight strong { color:var(--txt); }
     .native-right { display:flex; flex-direction:column; gap:16px; }
     .nr-card {
       padding:28px; background:var(--bg); border:1px solid var(--border);
@@ -416,7 +440,7 @@
   <div class="t-grid reveal">
 
     <div class="tc">
-      <div class="tc-num">AXIS 04 · AI Ready Data</div>
+      <div class="tc-num">AXIS 01 · AI Ready Data</div>
       <h3>Machine Readable 데이터 확보</h3>
       <div class="tc-sub">AI가 실제로 쓸 수 있는 데이터 기반부터</div>
       <p class="tc-body">
@@ -427,12 +451,11 @@
         <li><span>▸</span>데이터 분류 체계 수립 · 메타데이터 정비</li>
         <li><span>▸</span>정형·비정형 적재 목표 50%</li>
         <li><span>▸</span>Data Curation → Machine readable</li>
-        <li><span>▸</span>MBO 연계</li>
       </ul>
     </div>
 
     <div class="tc">
-      <div class="tc-num">AXIS 03 · TSP LLM 통합 Agent</div>
+      <div class="tc-num">AXIS 02 · TSP LLM 통합 Agent</div>
       <h3>파편화된 지식을 하나로</h3>
       <div class="tc-sub">데이터 위에 팀의 노하우를 통합</div>
       <p class="tc-body">
@@ -449,7 +472,7 @@
     </div>
 
     <div class="tc">
-      <div class="tc-num">AXIS 01 · AI NATIVE 전환</div>
+      <div class="tc-num">AXIS 03 · AI NATIVE 전환</div>
       <h3>하네스 배포 · 팀원 자율 개발</h3>
       <div class="tc-sub">지식을 활용하는 도구 환경을 갖춘다</div>
       <p class="tc-body">
@@ -466,7 +489,7 @@
     </div>
 
     <div class="tc">
-      <div class="tc-num">AXIS 02 · FDE 과제 밀착</div>
+      <div class="tc-num">AXIS 04 · FDE 과제 밀착</div>
       <h3>현장 AI 전환 사례 발굴</h3>
       <div class="tc-sub">도구를 들고 과제에서 실제 성과를 낸다</div>
       <p class="tc-body">
@@ -478,7 +501,6 @@
         <li><span>▸</span>과제 선정 → TSS 밀착 투입 → 함께 완결</li>
         <li><span>▸</span>Excel 업무 제거 · E2E Workflow 개선</li>
         <li><span>▸</span>성공 사례 → 하네스 패키징 → 팀 확산</li>
-        <li><span>▸</span>MBO 연계 AI 전환율 커버리지</li>
       </ul>
     </div>
 
@@ -489,7 +511,7 @@
 <div class="sec-full" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="inner">
     <div class="reveal">
-      <div class="slabel slg">AXIS 01 vs 02 · 두 가지 실행 방식</div>
+      <div class="slabel slg">AXIS 03 vs 04 · 두 가지 실행 방식</div>
       <h2>어떻게 다른가</h2>
       <p class="sdesc">
         AI 전환은 "팀원 스스로 영리해지는 것"과 "과제에 밀착해서 함께 바꾸는 것",
@@ -498,7 +520,7 @@
     </div>
     <div class="distinction-grid reveal">
       <div class="dc dc-native">
-        <span class="dc-tag dct1">AXIS 01 · AI NATIVE</span>
+        <span class="dc-tag dct1">AXIS 03 · AI NATIVE</span>
         <span class="dc-icon">🧑‍💻</span>
         <h3>팀원 스스로 AI를 활용해서</h3>
         <p class="dc-desc">
@@ -512,7 +534,7 @@
         </ul>
       </div>
       <div class="dc dc-fde">
-        <span class="dc-tag dct2">AXIS 02 · FDE</span>
+        <span class="dc-tag dct2">AXIS 04 · FDE</span>
         <span class="dc-icon">🤝</span>
         <h3>과제에 밀착해서 함께</h3>
         <p class="dc-desc">
@@ -537,10 +559,10 @@
     <p class="sdesc">각 과제는 독립적으로 실행되지만, 연결될수록 효과가 배가됩니다.</p>
   </div>
   <div class="pipeline reveal">
-    <div class="pb"><div class="pb-num pbn4">④ AI Ready Data</div><h4>데이터 기반</h4><p>AI가 쓸 수 있는 데이터를 만든다</p></div>
-    <div class="pb"><div class="pb-num pbn3">③ TSP LLM</div><h4>지식 통합</h4><p>데이터 위에 팀의 지식을 모은다</p></div>
-    <div class="pb"><div class="pb-num pbn1">① AI Native</div><h4>도구 환경</h4><p>지식을 활용하는 하네스를 만든다</p></div>
-    <div class="pb"><div class="pb-num pbn2">② FDE</div><h4>과제 밀착</h4><p>도구를 들고 과제에서 성과를 만든다</p></div>
+    <div class="pb"><div class="pb-num pbn4">① AI Ready Data</div><h4>데이터 기반</h4><p>AI가 쓸 수 있는 데이터를 만든다</p></div>
+    <div class="pb"><div class="pb-num pbn3">② TSP LLM</div><h4>지식 통합</h4><p>데이터 위에 팀의 지식을 모은다</p></div>
+    <div class="pb"><div class="pb-num pbn1">③ AI Native</div><h4>도구 환경</h4><p>지식을 활용하는 하네스를 만든다</p></div>
+    <div class="pb"><div class="pb-num pbn2">④ FDE</div><h4>과제 밀착</h4><p>도구를 들고 과제에서 성과를 만든다</p></div>
   </div>
   <div class="connect-note reveal">
     <div class="cn-icon">🔄</div>
@@ -562,24 +584,44 @@
     <div class="native-grid reveal">
       <div class="native-left">
         <div class="agent-flow">
-          <div class="af-label">AI NATIVE · 팀원의 일하는 방식</div>
-          <div class="af-nodes">
-            <div class="af-node af-node-person">팀원</div>
-            <div class="af-connector">⇄</div>
-            <div class="af-node af-node-agent">Agent</div>
-            <div class="af-connector">⇄</div>
-            <div class="af-node af-node-job">Job</div>
+          <div class="af-label">AI NATIVE · 팀원 1명이 여러 Agent를 다루는 방식</div>
+          <div class="af-multi">
+            <div class="af-person">
+              <span class="af-person-icon">🧑‍💻</span>
+              <span class="af-person-label">팀원</span>
+              <span class="af-person-sub">방향 설정 · 판단 · 예외 처리</span>
+            </div>
+            <div class="af-arrows">
+              <span class="af-arr"></span>
+              <span class="af-arr"></span>
+              <span class="af-arr"></span>
+              <span class="af-arr"></span>
+            </div>
+            <div class="af-agents">
+              <div class="af-agent-item">
+                <span class="af-ai">Agent A</span>
+                <span class="af-job">데이터 수집 · 분석</span>
+              </div>
+              <div class="af-agent-item">
+                <span class="af-ai">Agent B</span>
+                <span class="af-job">코드 생성 · 리뷰</span>
+              </div>
+              <div class="af-agent-item">
+                <span class="af-ai">Agent C</span>
+                <span class="af-job">문서 · 보고서 작성</span>
+              </div>
+              <div class="af-agent-item">
+                <span class="af-ai">Agent D</span>
+                <span class="af-job">배포 · 모니터링</span>
+              </div>
+            </div>
           </div>
-          <p class="af-desc">
-            팀원이 직접 실행하던 업무를 Agent가 처리합니다.<br>
-            팀원은 방향을 설정하고, Agent가 실행하고, Job이 완결됩니다.
-          </p>
-        </div>
-        <div class="reliable-card">
-          <div class="rc-label">RELIABLE DATA</div>
-          <div class="rc">
-            <h4>AI와 사람이 믿고 쓰는 데이터</h4>
-            <p>AI Ready Data 과제가 쌓은 자산이 Reliable Data가 됩니다. Agent가 판단의 근거로 사용하고, 사람이 결과를 신뢰할 수 있는 데이터 환경입니다.</p>
+          <div class="af-insight">
+            <span class="af-ins-icon">💡</span>
+            <div>
+              <strong>1인 = 여러 Agent의 오케스트레이터</strong><br>
+              팀원은 직접 실행하는 대신 Agent를 설계하고 지휘합니다. 각 Agent는 특정 업무를 전담하며 병렬로 실행됩니다. 팀원은 결과를 검토하고, 방향을 수정하고, 예외 상황을 판단하는 역할로 집중합니다.
+            </div>
           </div>
         </div>
       </div>
